@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Placement Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+            justify-content: center;
+            display: flex;
+            margin-top: 20px;
+            background-color: antiquewhite;
+            height: 50px;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+    <script>
+        function updateHiddenFields() {
+            // Reset all branch values to 0
+            document.getElementById("ec").value = "0";
+            document.getElementById("cs").value = "0";
+            document.getElementById("it").value = "0";
+            document.getElementById("mech").value = "0";
+            document.getElementById("elec").value = "0";
+            document.getElementById("civil").value = "0";
+
+            // Set the selected branch to 1
+            const branch = document.getElementById("branch").value;
+            document.getElementById(branch.toLowerCase()).value = "1";
+
+            // Set Gender fields
+            const gender = document.getElementById("gender").value;
+            document.getElementById("male").value = gender === "Male" ? "1" : "0";
+            document.getElementById("female").value = gender === "Female" ? "1" : "0";
+
+            // Internships, Hostel, and Backlogs are already set to Yes/No
+        }
+    </script>
+</head>
+<body>
+    <h2>Enter the following details to predict placement:</h2>
+    <form action="/predict" method="post" onsubmit="updateHiddenFields()">
+        <label for="age">Age:</label>
+        <select id="age" name="Age">
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+        </select>
+        
+        <label for="gender">Gender:</label>
+        <select id="gender" name="Gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        
+        <label for="branch">Branch:</label>
+        <select id="branch" name="Branch">
+            <option value="Electronics And Communication">Electronics And Communication</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Technology">Information Technology</option>
+            <option value="Mechanical">Mechanical</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Civil">Civil</option>
+        </select>
+
+        <label for="internships">Internships:</label>
+        <select id="internships" name="Internships">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        
+        <label for="cgpa">CGPA:</label>
+        <input type="text" id="cgpa" name="CGPA">
+        
+        <label for="hostel">Hostel:</label>
+        <select id="hostel" name="Hostel">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        
+        <label for="backlogs">History Of Backlogs:</label>
+        <select id="backlogs" name="HistoryOfBacklogs">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        
+        <!-- Hidden inputs for binary values -->
+        <input type="hidden" id="ec" name="Electronics And Communication" value="0">
+        <input type="hidden" id="cs" name="Computer Science" value="0">
+        <input type="hidden" id="it" name="Information Technology" value="0">
+        <input type="hidden" id="mech" name="Mechanical" value="0">
+        <input type="hidden" id="elec" name="Electrical" value="0">
+        <input type="hidden" id="civil" name="Civil" value="0">
+        
+        <input type="hidden" id="male" name="Male" value="0">
+        <input type="hidden" id="female" name="Female" value="0">
+        
+        <input type="submit" value="Predict">
+    </form>
+    <h3>{{ prediction_text }}</h3>
+</body>
+</html>
+
+
